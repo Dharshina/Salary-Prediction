@@ -2,12 +2,17 @@ from sklearn.base import is_regressor
 import streamlit as st
 import pickle
 import numpy as np
+import io
+import requests
 #import warnings
 #warnings.filterwarnings('ignore')
 
 def load_model():
-    with open('saved_steps.pkl', 'rb') as file:
-        data = pickle.load(file)
+    # URL to the raw pickle file
+    url = 'https://github.com/Dharshina/Salary-Prediction/raw/main/saved_steps.pkl'
+    response = requests.get(url)
+    response.raise_for_status()  # Check if the request was successful
+    data = pickle.load(io.BytesIO(response.content))
     return data
 
 data = load_model()
