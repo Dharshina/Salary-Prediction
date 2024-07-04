@@ -5,22 +5,9 @@ import numpy as np
 import requests
 
 def load_model():
-    try:
-        # URL to the raw pickle file
-        url = 'https://github.com/Dharshina/Salary-Prediction/raw/main/saved_steps.pkl'
-        response = requests.get(url)
-        response.raise_for_status()  # Check if the request was successful
-
-        # Load the pickled model
-        model_data = pickle.loads(response.content)
-        return model_data
-
-    except requests.exceptions.RequestException as e:
-        st.error(f"Error fetching model from URL: {e}")
-    except pickle.UnpicklingError as e:
-        st.error(f"Error loading pickled model: {e}")
-    except Exception as e:
-        st.error(f"Unexpected error: {e}")
+    with open('saved_steps.pkl', 'rb') as file:
+        data = pickle.load(file)
+    return data
 
 data = load_model()
 
